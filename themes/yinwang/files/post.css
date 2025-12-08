@@ -106,8 +106,6 @@ p code{
 
 a {
   text-decoration: none;
-  cursor: crosshair;
-  border-bottom: 1px dashed orange;
   color: #930ee4;
 }
 
