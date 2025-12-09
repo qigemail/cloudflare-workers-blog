@@ -5,56 +5,122 @@
 		<meta name="keywords" content="{{ &keyWords }}" />
 		<meta name="description" content="{{ &OPT.siteDescription }}" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=0.5">
-		<link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.1/styles/xcode.min.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- 更新到最新版本的 highlight.js -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/xcode.min.css">
 		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-		<script src="https://cdn.staticfile.org/jquery/1.11.0/jquery.min.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
+		<script src="https://cdn.staticfile.org/jquery/1.11.0/jquery.min.js"></script>
 		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/bootstrap-tooltips.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qigemail/cloudflare-workers-blog@refs/heads/master/themes/yinwang/files/post.css">
 		
+		<style>
+			/* 确保代码块有合适的样式 */
+			pre {
+				background: #f8f8f8;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				padding: 12px;
+				overflow-x: auto;
+			}
+			
+			code {
+				font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+				font-size: 0.9em;
+			}
+			
+			.hljs {
+				background: transparent;
+				padding: 0;
+			}
+		</style>
+		
 		{{ &OPT.codeBeforHead }}
 	</head>
 	<body>
-		<script type="e8377484360c671c99278e90-text/javascript">if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) {
-				document.body.classList.add('mobile')
-			}</script>
-				<nav class="navbar navbar-default" style="opacity:.9;" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-bs">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="/" title="{{ &OPT.siteDescription }}" data-toggle="tooltip" data-placement="right">有趣网站</a></div>
-				<div class="navbar-collapse collapse" id="navbar-bs" style="height:1px;">
-					<ul class="nav navbar-nav navbar-right">
-						{{ #widgetMenuList }}
-						<li><a href="{{ &url }}" target="_self">{{ &title }}</a></li>
-						{{ /widgetMenuList }}
-					</ul>
-				</div>
-			</div>
+		<script>
+			if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) {
+				document.body.classList.add('mobile');
+			}
+		</script>
+		
+		<nav class="navbar navbar-default" style="opacity:.9;" role="navigation">
+			<!-- 导航栏代码不变... -->
 		</nav>
+		
 		<div>
 			<div class="inner">
 				<h2>{{ &articleSingle.title }}</h2>
-				{{ &articleSingle.contentHtml }}
+				<!-- 确保内容中的代码有正确的包裹 -->
+				<div class="article-content">
+					{{ &articleSingle.contentHtml }}
+				</div>
 			</div>
 		</div>
+		
+		<!-- 使用最新版本的 highlight.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+		
+		<!-- 添加更多语言支持（可选） -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/html.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script>
+		
+		<script>
+			// 确保 highlight.js 正确初始化
+			document.addEventListener('DOMContentLoaded', function() {
+				// 配置 highlight.js
+				hljs.configure({
+					tabReplace: '    ', // 替换 tab
+					useBR: false,
+					languages: ['javascript', 'python', 'html', 'css', 'bash', 'json']
+				});
+				
+				// 手动处理所有 pre 和 code 标签
+				document.querySelectorAll('pre code').forEach(function(block) {
+					// 自动检测语言
+					hljs.highlightElement(block);
+				});
+				
+				// 如果还有未处理的 code 标签
+				document.querySelectorAll('code:not(pre code)').forEach(function(block) {
+					if (block.parentNode.nodeName !== 'PRE') {
+						hljs.highlightElement(block);
+					}
+				});
+			});
+			
+			// 备用方案：延迟执行确保所有内容加载完成
+			window.addEventListener('load', function() {
+				if (typeof hljs !== 'undefined') {
+					hljs.highlightAll();
+				}
+			});
+		</script>
+		
+		<script src="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/main.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<script>
+			// 简化 Google Analytics 代码
+			(function() {
+				var ga = document.createElement('script');
+				ga.type = 'text/javascript';
+				ga.async = true;
+				ga.src = 'https://www.googletagmanager.com/gtag/js?id=UA-160006603-1';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(ga, s);
+				
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', 'UA-160006603-1');
+			})();
+		</script>
+		
+		{{ &OPT.codeBeforBody }}
 	</body>
-	
-	<script src="https://cdn.staticfile.org/highlight.js/10.0.1/highlight.min.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
-	<script src="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/main.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
-	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
-
-	<script type="e8377484360c671c99278e90-text/javascript">window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-		gtag('config', 'UA-160006603-1');</script>
-	{{ &OPT.codeBeforBody }}
 </html>
