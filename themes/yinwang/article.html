@@ -15,26 +15,6 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/qigemail/cloudflare-workers-blog@refs/heads/master/themes/yinwang/files/post.css">
 		
 		{{ &OPT.codeBeforHead }}
-				<style>
-			/* 确保代码块有合适的样式 */
-			pre {
-				background: #f8f8f8;
-				border: 1px solid #ddd;
-				border-radius: 4px;
-				padding: 12px;
-				overflow-x: auto;
-			}
-			
-			code {
-				font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-				font-size: 0.9em;
-			}
-			
-			.hljs {
-				background: transparent;
-				padding: 0;
-			}
-		</style>
 	</head>
 	<body>
 		<script type="e8377484360c671c99278e90-text/javascript">if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) {
@@ -61,7 +41,9 @@
 		<div>
 			<div class="inner">
 				<h2>{{ &articleSingle.title }}</h2>
-				{{ &articleSingle.contentHtml }}
+													<div class="entry-content">
+										{{ &articleSingle.contentHtml }}
+									</div>
 			</div>
 		</div>
 	</body>
