@@ -41,9 +41,7 @@
 		<div>
 			<div class="inner">
 				<h2>{{ &articleSingle.title }}</h2>
-													<div class="entry-content">
-										{{ &articleSingle.contentHtml }}
-									</div>
+					{{ &articleSingle.contentHtml }}
 			</div>
 		</div>
 	</body>
@@ -58,5 +56,6 @@
 		}
 		gtag('js', new Date());
 		gtag('config', 'UA-160006603-1');</script>
+	<script>hljs.initHighlightingOnLoad(); </script>
 	{{ &OPT.codeBeforBody }}
 </html>
