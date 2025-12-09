@@ -1,266 +1,71 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>{{ &title }}</title>
-    
-    <!-- 替换为现代 CSS 框架 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    
-    <!-- 代码高亮优化 -->
-    <link rel="stylesheet" 
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-    
-    <!-- 图标库 -->
-    <link rel="stylesheet" 
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <!-- 自定义主题样式 -->
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #7c3aed;
-            --bg-color: #ffffff;
-            --text-color: #1f2937;
-            --border-radius: 12px;
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #0f172a;
-                --text-color: #f1f5f9;
-            }
-        }
-        
-        body {
-            background: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.8;
-            transition: background-color 0.3s ease;
-        }
-        
-        .article-container {
-            max-width: 768px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
-        
-        .article-header {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        .article-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .article-meta {
-            color: #6b7280;
-            font-size: 0.95rem;
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .article-content {
-            font-size: 1.125rem;
-        }
-        
-        .article-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* 代码块样式优化 */
-        pre {
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            overflow-x: auto;
-            background: #1e293b !important;
-        }
-        
-        code {
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.9em;
-        }
-        
-        /* 导航栏优化 */
-        .navbar {
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.9);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        @media (prefers-color-scheme: dark) {
-            .navbar {
-                background: rgba(15, 23, 42, 0.9);
-            }
-        }
-        
-        /* 移动端优化 */
-        @media (max-width: 768px) {
-            .article-title {
-                font-size: 1.75rem;
-            }
-            
-            .article-container {
-                padding: 1rem;
-            }
-        }
-    </style>
-    
-    {{ &OPT.codeBeforHead }}
-</head>
-<body>
-    <!-- 导航栏优化 -->
-    <nav class="navbar" aria-label="主要导航">
-        <div class="container">
-            <a href="/" class="logo" aria-label="返回首页">
-                <i class="fas fa-blog"></i>
-                <span>有趣网站</span>
-            </a>
-            
-            <button class="menu-toggle" aria-label="切换菜单" aria-expanded="false">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <div class="nav-menu">
-                {{ #widgetMenuList }}
-                <a href="{{ &url }}" class="nav-link">
-                    <i class="fas fa-{{ &icon|default:'link' }}"></i>
-                    {{ &title }}
-                </a>
-                {{ /widgetMenuList }}
-                
-                <!-- 主题切换按钮 -->
-                <button class="theme-toggle" aria-label="切换主题">
-                    <i class="fas fa-moon"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- 文章内容 -->
-    <main class="article-container">
-        <article>
-            <header class="article-header">
-                <h1 class="article-title">{{ &articleSingle.title }}</h1>
-                
-                <div class="article-meta">
-                    <span><i class="far fa-calendar"></i> {{ &articleSingle.date }}</span>
-                    <span><i class="far fa-eye"></i> {{ &articleSingle.views }} 阅读</span>
-                    <span><i class="far fa-clock"></i> {{ &articleSingle.readTime }} 分钟阅读</span>
-                    {{ #articleSingle.tags }}
-                    <a href="/tag/{{ &value }}" class="tag">
-                        <i class="fas fa-tag"></i> {{ &value }}
-                    </a>
-                    {{ /articleSingle.tags }}
-                </div>
-            </header>
-            
-            <div class="article-content">
-                {{ &articleSingle.contentHtml }}
-            </div>
-            
-            <!-- 上一篇/下一篇导航 -->
-            <div class="article-navigation">
-                {{ #articleSingle.prev }}
-                <a href="{{ &url }}" class="nav-prev">
-                    <i class="fas fa-chevron-left"></i>
-                    <span>{{ &title }}</span>
-                </a>
-                {{ /articleSingle.prev }}
-                
-                {{ #articleSingle.next }}
-                <a href="{{ &url }}" class="nav-next">
-                    <span>{{ &title }}</span>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-                {{ /articleSingle.next }}
-            </div>
-        </article>
-    </main>
-    
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <p>© {{ &currentYear }} 有趣网站 · 由 Cloudflare Workers 驱动</p>
-            <div class="footer-links">
-                <a href="/rss.xml"><i class="fas fa-rss"></i> RSS</a>
-                <a href="/sitemap.xml"><i class="fas fa-sitemap"></i> 站点地图</a>
-                <a href="https://github.com/qigemail/cloudflare-workers-blog">
-                    <i class="fab fa-github"></i> 源码
-                </a>
-            </div>
-        </div>
-    </footer>
-    
-    <!-- JavaScript 优化 -->
-    <script>
-        // 移动端菜单切换
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            const menu = document.querySelector('.nav-menu');
-            const expanded = this.getAttribute('aria-expanded') === 'true';
-            this.setAttribute('aria-expanded', !expanded);
-            menu.classList.toggle('show');
-        });
-        
-        // 主题切换
-        const themeToggle = document.querySelector('.theme-toggle');
-        themeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            themeToggle.innerHTML = isDark ? 
-                '<i class="fas fa-moon"></i>' : 
-                '<i class="fas fa-sun"></i>';
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-        });
-        
-        // 代码高亮
-        if (typeof hljs !== 'undefined') {
-            hljs.highlightAll();
-            hljs.addPlugin({
-                'after:highlightElement': ({ el, result }) => {
-                    el.innerHTML = `
-                        <div class="code-header">
-                            <span>${result.language || 'text'}</span>
-                            <button class="copy-btn" aria-label="复制代码">
-                                <i class="far fa-copy"></i>
-                            </button>
-                        </div>
-                        ${result.value}
-                    `;
-                }
-            });
-        }
-        
-        // 图片懒加载
-        if ('IntersectionObserver' in window) {
-            const imgObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        imgObserver.unobserve(img);
-                    }
-                });
-            });
-            
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                imgObserver.observe(img);
-            });
-        }
-    </script>
-    
-    {{ &OPT.codeBeforBody }}
-</body>
+<html>
+	<head>
+		<title>{{ &title }}</title>
+		<meta name="keywords" content="{{ &keyWords }}" />
+		<meta name="description" content="{{ &OPT.siteDescription }}" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=0.5">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.1/styles/xcode.min.css">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/1.11.0/jquery.min.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/bootstrap-tooltips.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/home.css">
+		
+		{{ &OPT.codeBeforHead }}
+	</head>
+	<body>
+		<script type="a73da9fd004c0b2dc959c576-text/javascript">if (/mobile/i.test(navigator.userAgent) || /android/i.test(navigator.userAgent)) {
+				document.body.classList.add('mobile')
+			}</script>
+		<nav class="navbar navbar-default" style="opacity:.9;" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-bs">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/" title="{{ &OPT.siteDescription }}" data-toggle="tooltip" data-placement="right">{{ &title }}</a></div>
+				<div class="navbar-collapse collapse" id="navbar-bs" style="height:1px;">
+					<ul class="nav navbar-nav navbar-right">
+						{{ #widgetMenuList }}
+						<li><a href="{{ &url }}" target="_self">{{ &title }}</a></li>
+						{{ /widgetMenuList }}
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div>
+			<div class="outer">
+				<ul class="list-group">
+					{{ #articleList }}
+					<li class="list-group-item title">
+						<div class="date">{{ &createDate10 }}</div>
+						<a href="/article/{{&id}}/{{&link}}.html" target="_self">{{ &title }}</a>
+					</li>
+					{{ /articleList }}
+				</ul>
+			</div>
+			<div class="oldblog">
+				<p class="text-center">
+					{{ &OPT.copyRight }}
+				</p>
+			</div>
+		</div>
+
+		{{ &OPT.codeBeforBody }}
+	</body>
+	<script src="https://cdn.staticfile.org/highlight.js/10.0.1/highlight.min.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
+	<script src="https://cdn.jsdelivr.net/gh/gdtool/cloudflare-workers-blog@master/themes/yinwang/files/main.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js" type="a73da9fd004c0b2dc959c576-text/javascript"></script>
+	<script type="a73da9fd004c0b2dc959c576-text/javascript">window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'UA-160006603-1');</script>
+
 </html>
